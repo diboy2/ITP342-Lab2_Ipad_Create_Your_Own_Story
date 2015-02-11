@@ -44,6 +44,10 @@
     [self.nameField resignFirstResponder];
     [self.numberField resignFirstResponder];
 }
+- (IBAction)sliderChanged:(UISlider *)sender{
+    int progress = (int)lroundf(sender.value);
+    self.sliderLabel.text = [NSString stringWithFormat:@"%d",progress];
+}
 - (IBAction)friendStepperChanged:(UIStepper *)sender {
     
     UIStepper *stepper = (UIStepper *) sender;
@@ -75,16 +79,32 @@
 }
 
 - (void) createStory{
-    NSString *message;
+    NSMutableString *message;
     NSString *ending;
+    NSString *ride;
     NSString *title;
     
     message = @"testing Message";
     
+    if(self.nameField.text.length == 0 || self.numberField.text.length == 0){
+        title = @"Error";
+        message = [[NSMutableString alloc] initWithString:@"You need to enter info in the text fieds."];
+    }else{
+        switch(self.ridesSegmentControl.selectedSegmentIndex){
+            case 0: ride = @"Ferris Wheel";
+                break;
+            case 1: ride = @"Merry Go Round";
+                break;
+            case 2: ride = @"Roller Coaster";
+                break;
+        }
+    }
+    
+    
     if(self.happyEndingSwitch.isOn){
-        ending = @"They all happily slept that day.";
+        ending = @"They all happily enjoyed some cotton candy.";
     } else{
-        ending = @"They all ran";
+        ending = @"They all felt sick and vomited";
     }
     
     //[message appendString:ending];
