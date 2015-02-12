@@ -67,7 +67,7 @@
     
 }
 - (IBAction)createStoryButton:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Is it story time?" delegate:self cancelButtonTitle:@"No" destructiveButtonTitle:nil otherButtonTitles:@"Absolutely",nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you ready to show the story?" delegate:self cancelButtonTitle:@"No" destructiveButtonTitle:nil otherButtonTitles:@"YASS!!",nil];
     [actionSheet showInView:self.view];
 }
 
@@ -84,7 +84,6 @@
     NSString *ride;
     NSString *title;
     
-    message = @"testing Message";
     
     if(self.nameField.text.length == 0 || self.numberField.text.length == 0){
         title = @"Error";
@@ -98,17 +97,22 @@
             case 2: ride = @"Roller Coaster";
                 break;
         }
+        
+        message = [[NSMutableString alloc] initWithFormat:
+                   @"%@ hasn't been to the amusement park for %@ years.\n He/she came with %@ friends.\n He/she went on the %@.\n He/she gave the amusement park a fun rating of %@ out of 10. \n",self.nameField.text, self.numberField.text, self.stepperLabel.text, ride,self.sliderLabel.text ];
+        
+        
+        if(self.happyEndingSwitch.isOn){
+            ending = @"They all happily enjoyed some cotton candy.";
+        } else{
+            ending = @"They all felt sick and vomited.";
+        }
+        
+        [message appendString:ending];
+        title = @"Your Amusement Park Story";
     }
     
     
-    if(self.happyEndingSwitch.isOn){
-        ending = @"They all happily enjoyed some cotton candy.";
-    } else{
-        ending = @"They all felt sick and vomited";
-    }
-    
-    //[message appendString:ending];
-    title = @"Your Carnival Story";
     
     UIAlertView  *alert = [[UIAlertView alloc] initWithTitle: title message:message delegate:self cancelButtonTitle:@"Done" otherButtonTitles: nil];
     [alert show];
